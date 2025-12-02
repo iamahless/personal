@@ -1,8 +1,8 @@
-import { usePrefersReducedMotion } from "@hooks";
-import { loaderDelay, navDelay } from "@utils";
-import React, { useEffect, useState } from "react";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import styled from "styled-components";
+import { usePrefersReducedMotion } from '@hooks';
+import { loaderDelay, navDelay } from '@utils';
+import React, { useEffect, useState } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import styled from 'styled-components';
 
 const StyledHeroSection = styled.section`
   ${({ theme }) => theme.mixins.flexCenter};
@@ -47,61 +47,68 @@ const StyledHeroSection = styled.section`
 `;
 
 const Hero = () => {
-	const [isMounted, setIsMounted] = useState(false);
-	const prefersReducedMotion = usePrefersReducedMotion();
+  const [isMounted, setIsMounted] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
-	useEffect(() => {
-		if (prefersReducedMotion) {
-			return;
-		}
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      return;
+    }
 
-		const timeout = setTimeout(() => setIsMounted(true), navDelay);
-		return () => clearTimeout(timeout);
-	}, []);
+    const timeout = setTimeout(() => setIsMounted(true), navDelay);
+    return () => clearTimeout(timeout);
+  }, []);
 
-	const one = <h1>Hi, my name is</h1>;
-	const two = <h2 className="big-heading">Alexander Garuba.</h2>;
-	const three = <h3 className="big-heading">I build robust, scalable, and maintainable software solutions.</h3>;
-	const four = (
-		<>
-			<p>
-        I’m a versatile full-stack developer specializing in microservices architecture, distributed systems, and clean coding practices. Currently, I'm a Senior Backend Engineer at {" "}<a href="https://getladda.com/" target="_blank" rel="noreferrer"></a>Ladda</a>, focused on building and optimizing core financial modules that improve processing efficiency.
-			</p>
-		</>
-	);
-	const five = (
-		<a
-			className="email-link"
-			href="https://www.newline.co/courses/build-a-spotify-connected-app"
-			target="_blank"
-			rel="noreferrer"
-		>
-			Check out my course!
-		</a>
-	);
+  const one = <h1>Hi, my name is</h1>;
+  const two = <h2 className="big-heading">Alexander Garuba.</h2>;
+  const three = (
+    <h3 className="big-heading">I build robust, scalable, and maintainable software solutions.</h3>
+  );
+  const four = (
+    <>
+      <p>
+        I’m a versatile full-stack developer specializing in microservices architecture, distributed
+        systems, and clean coding practices. Currently, I'm a Senior Backend Engineer at{' '}
+        <a href="https://getladda.com/" target="_blank" rel="noreferrer">
+          Ladda
+        </a>
+        , focused on building and optimizing core financial modules that improve processing
+        efficiency.
+      </p>
+    </>
+  );
+  const five = (
+    <a
+      className="email-link"
+      href="https://www.newline.co/courses/build-a-spotify-connected-app"
+      target="_blank"
+      rel="noreferrer">
+      Check out my course!
+    </a>
+  );
 
-	const items = [one, two, three, four, five];
+  const items = [one, two, three, four, five];
 
-	return (
-		<StyledHeroSection>
-			{prefersReducedMotion ? (
-				<>
-					{items.map((item, i) => (
-						<div key={i}>{item}</div>
-					))}
-				</>
-			) : (
-				<TransitionGroup component={null}>
-					{isMounted &&
-						items.map((item, i) => (
-							<CSSTransition key={i} classNames="fadeup" timeout={loaderDelay}>
-								<div style={{ transitionDelay: `${i + 1}00ms` }}>{item}</div>
-							</CSSTransition>
-						))}
-				</TransitionGroup>
-			)}
-		</StyledHeroSection>
-	);
+  return (
+    <StyledHeroSection>
+      {prefersReducedMotion ? (
+        <>
+          {items.map((item, i) => (
+            <div key={i}>{item}</div>
+          ))}
+        </>
+      ) : (
+        <TransitionGroup component={null}>
+          {isMounted &&
+            items.map((item, i) => (
+              <CSSTransition key={i} classNames="fadeup" timeout={loaderDelay}>
+                <div style={{ transitionDelay: `${i + 1}00ms` }}>{item}</div>
+              </CSSTransition>
+            ))}
+        </TransitionGroup>
+      )}
+    </StyledHeroSection>
+  );
 };
 
 export default Hero;
